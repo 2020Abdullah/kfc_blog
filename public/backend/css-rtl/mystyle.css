@@ -1,0 +1,218 @@
+/*
+public style
+===================
+*/
+
+.rtl {
+    direction: rtl;
+}
+
+.table-responsive {
+  overflow: visible !important;
+}
+
+.dropdown-menu {
+  position: absolute !important;
+  transform: translate3d(0px, 0px, 0px) !important;
+  will-change: transform;
+  z-index: 1050;
+}
+
+.blog-wrapper img {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.img_thumb {
+  width: 100%;
+  height: 70px;
+}
+.card-image img {
+  height: 300px;
+}
+.article-content h1, .article-content h2, .article-content h3, .article-content p {
+  line-height: 1.8; /* ضبط التباعد بين الأسطر */
+  font-size: 20px; /* ضبط حجم النص */
+  text-align: justify; /* محاذاة النص بشكل مبرر */
+  word-spacing: 1px; /* تقليل أو زيادة المسافة بين الكلمات */
+  letter-spacing: 0.5px; /* ضبط تباعد الحروف */
+  padding: 10px; /* إضافة هوامش داخلية للمحتوى */
+}
+.article-content img {
+  width: 100%;
+  max-width: 100%; 
+  height: auto;  
+  display: block;  
+  margin: 1rem auto; 
+}
+
+/* **********************  slider Style ********************* */
+#elnawader_slider {
+  padding-top: var(--pd);
+  padding-bottom: var(--pd);
+}
+
+.swiper {
+  width: 100%;
+  height: 250px;
+}
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+.swiper-slide img:hover {
+  transform: scale(1.05);
+}
+
+.swiper-button-prev, .swiper-button-next {
+  color: var(--secound-color);
+  font-size: 15px;
+}
+
+#swiper-wrapper {
+  position: relative;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+  display: none;
+}
+
+#swiper-wrapper .swiper-slide:hover .delete-btn {
+  display: block;
+}
+
+/********** comment *********/
+.comment-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+}
+.comment_content {
+  padding-bottom: 1rem;
+}
+.comment-list {
+  position: relative;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.comment_box {
+  margin-right: 4rem;
+}
+.comment_num {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  background-color: #3e5e5b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 30px;
+}
+
+/*
+sliderChoose 
+======================
+*/
+#sliderChoose a {
+  font-size: 25px;
+}
+#sliderChoose .card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+/*
+logo 
+======================
+*/
+.logo {
+    width: 200px;
+    height: auto;
+}
+.logo img {
+    width: 100%;
+}
+
+/* bubble design */
+.bubble {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: url('../images/bubble.png') no-repeat center;
+    background-size: cover;
+    border-radius: 50%; /* شكل دائري */
+    animation: float 10s infinite ease-in-out;
+  }
+  
+  /* توزيع الفقاعات عشوائياً */
+  .bubble:nth-child(1) {
+    top: 10%;
+    left: 20%;
+    animation-duration: 5s;
+  }
+  .bubble:nth-child(2) {
+    top: 50%;
+    left: 50%;
+    animation-duration: 8s;
+  }
+  .bubble:nth-child(3) {
+    top: 80%;
+    left: 30%;
+    animation-duration: 10s;
+  }
+  
+  /* حركة الفقاعات */
+  @keyframes float {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-100px) scale(1.2);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(-200px) scale(1);
+      opacity: 0;
+    }
+  }
+
+.auth-wrapper .card {
+    background-color: transparent;
+}
+.auth-wrapper .logo_img {
+    text-align: center;
+}
+.auth-wrapper .logo_img img {
+    width: 200px;
+}
+.auth-wrapper a {
+    color: #fff;
+}
+.auth-wrapper .form-label {
+    font-size: 1rem;
+    color: #fff;
+}
+
+@media(max-width: 768px){
+  .footer_content {
+    flex-direction: column;
+  } 
+}

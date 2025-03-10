@@ -1,0 +1,158 @@
+@import url('https://fonts.googleapis.com/css2?family=Changa:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Noto+Kufi+Arabic:wght@100..900&display=swap');
+:root {
+  --bg-main: #0099ff;
+  --text-color: #019d8e;
+}
+
+body, html {
+  font-family: "Noto Kufi Arabic", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+}
+.home {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.wave {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  z-index: 1;
+}
+.bubble img {
+  width: 200px;
+  height: 200px;
+  position: absolute;
+  bottom: 50px;
+  z-index: 999;
+}
+.home .home_content {
+  width: 100vw;
+  height: max-content; 
+  background-color: var(--bg-main); 
+  position: relative;
+  z-index: 999;
+}
+.logo_area {
+  padding-top: 2rem;
+}
+
+.logo_area img {
+    width: 300px;
+    height: 300px;
+    margin: auto;
+}
+.page_content {
+    width: 100%;
+    text-align: right;
+    padding: 3rem;
+    color: var(--text-color);
+}
+.page_heading {
+    padding-top: 2rem;
+    width: 100%;
+    height: 100%;
+}
+.page_heading h2, .page_heading p, .page_heading h3 {
+    color: #fff;
+}
+.page_heading h2 {
+    font-size: 40px;
+}
+.page_heading h3 {
+  font-size: 30px;
+}
+.page_heading p {
+    font-size: 20px;
+}
+.page_action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.page_action .button-19 {
+  position: relative;
+  z-index: 9999;
+}
+
+.button-19 {
+  appearance: button;
+  background-color: var(--text-color);
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  cursor: pointer;
+  display: inline-block;
+  font-family: din-round,sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .8px;
+  line-height: 20px;
+  margin: 0;
+  outline: none;
+  overflow: visible;
+  padding: 13px 16px;
+  text-align: center;
+  text-transform: uppercase;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  transition: filter .2s;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: middle;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.button-19:after {
+  background-clip: padding-box;
+  background-color: #1CB0F6;
+  border: solid transparent;
+  border-radius: 16px;
+  border-width: 0 0 4px;
+  bottom: -4px;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: -1;
+}
+
+.button-19,
+.button-19:focus {
+  user-select: auto;
+}
+
+.button-19:hover:not(:disabled) {
+  filter: brightness(1.1);
+  -webkit-filter: brightness(1.1);
+}
+
+.button-19:disabled {
+  cursor: auto;
+}
+
+.button-19:active {
+  border-width: 4px 0 0;
+  background: none;
+}
+
+@media (max-width: 768px)  {
+    .home {
+        height: 100%;
+    }
+    .logo_area {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
