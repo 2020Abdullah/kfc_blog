@@ -18,7 +18,12 @@ class SliderSetting extends Component
     public $slices = [];
     public $title, $description, $image, $youtube_link, $refLink;
 
-    protected $listeners = ['refreshSlices' => 'render'];
+    public function updated($propertyName)
+    {
+        if ($propertyName == 'image') {
+            $this->dispatch('refreshSlices'); // إرسال حدث بعد رفع الصورة
+        }
+    }
 
     public function mount(){
         $this->slider = Slider::with('slices')->where('id', $this->sliderId)->first();
@@ -56,12 +61,11 @@ class SliderSetting extends Component
     }
 
     public function UpdateSlice()
-    {
- 
+    { 
         // upload image if image Found
 
         if($this->image !== null){
-            $imageName = time() . '.' . $this->image->getClientOriginalExtension();
+            $imageName = time() . '.' . $this->image->getClientOriginalName();
             $this->image->storeAs('sliders', $imageName, 'public_uploads');
             $imagePath = 'sliders/' . $imageName;
         }
@@ -90,8 +94,6 @@ class SliderSetting extends Component
         ];
 
         $this->reset(['youtube_link', 'image', 'title', 'description', 'refLink']);
-
-        $this->dispatch('refreshSlices');
 
     }
 
@@ -128,6 +130,15 @@ class SliderSetting extends Component
 
     public function removeSlice($index)
     {
+        // التحقق مما إذا كانت الشريحة تحتوي على صورة
+        if (!empty($this->slices[$index]['image'])) {
+            $imagePath = public_path('sliders/' . $this->slices[$index]['image']); // تحديد المسار الفعلي للصورة
+            
+            // حذف الصورة من التخزين إذا كانت موجودة
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         if (isset($this->slices[$index]['id'])) {
             SliderSlices::where('id', $this->slices[$index]['id'])->delete();
         }
@@ -136,8 +147,6 @@ class SliderSetting extends Component
 
         $this->slices = array_values($this->slices); // إعادة ترتيب المصفوفة
 
-        // فرض إعادة تحديث Livewire
-        $this->dispatch('refreshSlices');
     }
 
     public function PreviousStep()

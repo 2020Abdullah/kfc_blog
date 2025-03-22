@@ -4,10 +4,12 @@ use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\BlogsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SliderController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +30,7 @@ Route::get('allNews/view', [HomeController::class, 'allNews'])->name('allNews');
 Route::get('/get-slider-by-code/{code}', [SliderController::class, 'getSliderByCode'])->name('slider.code');
 Route::get('page/{id}-{slug}', [HomeController::class, 'pageView'])->name('pageView');
 Route::get('/search', [HomeController::class, 'search'])->name('search');
+Route::get('/download/file/{id}', [HomeController::class, 'donwloadFile'])->name('file.download');
 
 
 Route::group(['middleware' => 'auth'], function(){
@@ -48,6 +51,8 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('blog/{id}/edit', [BlogsController::class, 'editBlog'])->name('blog.edit');
     Route::post('blog/update', [BlogsController::class, 'updateBlog'])->name('blog.update');
     Route::post('blog/delete', [BlogsController::class, 'deleteBlog'])->name('blog.delete');
+    
+    /* images route */
     Route::post('/upload-images', [BlogsController::class, 'uploadImages'])->name('upload.images');
 
     /* page crud */
@@ -56,8 +61,10 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('page/add', [PageController::class, 'addPage'])->name('page.add');
     Route::post('page/store', [PageController::class, 'storePage'])->name('page.store');
     Route::get('page/{id}/edit', [PageController::class, 'editPage'])->name('page.edit');
-    Route::post('page/update', [PageController::class, 'updateBlog'])->name('page.update');
+    Route::post('page/update', [PageController::class, 'updatePage'])->name('page.update');
     Route::post('page/delete', [PageController::class, 'deletePage'])->name('page.delete');
+    Route::post('delete/file', [PageController::class, 'deleteFile'])->name('file.delete');
+    Route::post('/upload', [PageController::class, 'uploadFile'])->name('page.upload');
 
     /* slider */
     Route::get('slider/view', [SliderController::class, 'sliderIndex'])->name('slider.index');

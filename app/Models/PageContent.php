@@ -11,4 +11,9 @@ class PageContent extends Model
 
     protected $fillable = ['title', 'main_image', 'content', 'category_id', 'location'];
 
+    public function files()
+    {
+        return $this->morphMany(FilePath::class, 'fileable');
+    }
+
 }

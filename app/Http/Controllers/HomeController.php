@@ -7,6 +7,7 @@ use App\Http\Requests\CommentRequest;
 use App\Models\Blog;
 use App\Models\BlogComment;
 use App\Models\Category;
+use App\Models\FilePath;
 use App\Models\PageContent;
 use App\Models\SiteInfo;
 use App\Models\Slider;
@@ -43,7 +44,8 @@ class HomeController extends Controller
     }
 
     public function pageView($id, $slug) {
-        $data['page'] = PageContent::where('id', $id)->firstOrFail();
+        $data['logo'] = SiteInfo::value('site_logo');
+        $data['page'] = PageContent::with('files')->where('id', $id)->firstOrFail();
         $data['pages'] = PageContent::latest()->get();
         $data['hijriDate'] = Hijri::Date('j / m / Y هـ', $data['page']->created_at);
         return view('fronted.page', $data);
@@ -63,5 +65,17 @@ class HomeController extends Controller
                      ->paginate(10); // عرض 10 نتائج لكل صفحة
 
         return view('fronted.search-results', compact('blogs', 'query'));
+    }
+
+    public function donwloadFile($id){
+        $file = FilePath::findOrFail($id);
+
+        $filePath = storage_path("app/public/pdf/" . $file->fileName);
+    
+        if (!file_exists($filePath)) {
+            abort(404, "الملف غير موجود");
+        }
+    
+        return response()->download($filePath);
     }
 }

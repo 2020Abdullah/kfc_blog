@@ -22,7 +22,9 @@
                 <h3>{{ $page->title }}</h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item" aria-current="page">الرئيسية</li>
+                     <li class="breadcrumb-item" aria-current="page">
+                        <a class="link" href="{{ route('home') }}">الرئيسية</a>
+                     </li>
                       <li class="breadcrumb-item active" aria-current="page">{{ $page->title }}</li>
                     </ol>
                 </nav>
@@ -46,6 +48,23 @@
                                 </div>
                                 <div class="post-content">
                                     {!! $page->content !!}
+                                </div>
+                                <div class="row">
+                                    @foreach($page->files as $pdf)
+                                        <div class="col-md-4">
+                                            <div class="card pdfCard text-center d-flex flex-column h-100">
+                                                <div class="card-image">
+                                                    <img src="{{ asset($logo) }}" alt="logo">    
+                                                </div>
+                                                <div class="card-body">
+                                                    <h4>{{ $pdf->fileName }}</h4>
+                                                </div>
+                                                <div class="card-footer">
+                                                   <a class="link" href="{{ route('file.download', $pdf->id) }}">تحميل الملف</a>    
+                                                </div>
+                                            </div> 
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -77,6 +96,8 @@
     </div>
 </section>
 
+<!-- location -->
+<x-map-location />
 @endsection
 
 @section('script')
@@ -89,6 +110,35 @@ function printSpecificContent(className) {
     window.print(); // تشغيل الطباعة
     document.body.innerHTML = originalContents; // إعادة المحتوى الأصلي بعد الطباعة
 }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let container = document.querySelector(".post-content");
+        if (container) {
+            let googleFormRegex = /https:\/\/forms\.gle\/[a-zA-Z0-9]+/g;
+            let googleDocsRegex = /https:\/\/docs\.google\.com\/forms\/d\/e\/([^\/?]+)/g;
+
+            let content = container.innerHTML;
+
+            // استبدال الروابط المختصرة (forms.gle)
+            content = content.replace(googleFormRegex, function (match) {
+                return `<iframe src="${convertShortUrlToEmbed(match)}" allowfullscreen></iframe>`;
+            });
+
+            // استبدال الروابط الطويلة (docs.google.com/forms)
+            content = content.replace(googleDocsRegex, function (match, formId) {
+                return `<iframe src="https://docs.google.com/forms/d/e/${formId}/viewform?embedded=true" allowfullscreen></iframe>`;
+            });
+
+            container.innerHTML = content;
+        }
+
+        function convertShortUrlToEmbed(shortUrl) {
+            // لا يمكننا تحويل الرابط المختصر مباشرة بدون استعلام Google، لذا يجب على المستخدم إدخال الرابط الكامل
+            return "يرجى استخدام رابط نموذج Google Forms الكامل بدلاً من الرابط المختصر.";
+        }
+    });
 </script>
 @endsection
 

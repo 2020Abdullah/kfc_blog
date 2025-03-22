@@ -7,6 +7,8 @@ use App\Models\Blog;
 use App\Models\BlogComment;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class BlogsController extends Controller
 {
@@ -118,5 +120,45 @@ class BlogsController extends Controller
 
         return response()->json(['error' => 'لم يتم تحديد أي صور'], 400);
     }
+
+    // public function uploadPDF(Request $request)
+    // {
+    //     if ($request->hasFile('pdf')) {
+    //         $file = $request->file('pdf');
+    
+    //         // إنشاء اسم فريد للملف
+    //         $filename = time() . '_' . $file->getClientOriginalName();
+    
+    //         // حفظ الملف داخل مجلد storage/app/public/pdf
+    //         $filePath = $file->storeAs('public/pdf', $filename);
+    
+    //         // تحويل مسار التخزين إلى رابط يمكن الوصول إليه
+    //         $pdfUrl = asset(Storage::url('pdf/' . $filename));
+    
+    //         // جلب شعار الموقع من قاعدة البيانات
+    //         $siteLogo = DB::table('site_infos')->value('site_logo');
+    
+    //         // التأكد من أن الشعار يحتوي على رابط صحيح
+    //         $siteLogoUrl = $siteLogo ? asset($siteLogo) : asset('default-logo.png');
+    
+    //         // HTML المُجهز لإضافته في Quill
+    //         $html = '
+    //         <div class="pdf-container ql-align-center" style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 10px;">
+    //             <div class="pdfBlock" style="border: 1px solid #ddd; padding: 10px; text-align: center; width: 150px; border-radius: 5px;">
+    //                 <img src="' . $siteLogoUrl . '" alt="Logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
+    //                 <p style="margin: 5px 0; font-weight: bold; font-size: 14px;">📄 ' . $file->getClientOriginalName() . '</p>
+    //                 <a href="' . $pdfUrl . '" download target="_blank" style="color: #006600; text-decoration: underline; font-weight: bold; font-size: 12px;">تحميل الملف</a>
+    //             </div>
+    //         </div>';
+    
+    //         return response()->json([
+    //             'pdfUrl' => $pdfUrl,
+    //             'siteLogo' => $siteLogoUrl,
+    //             'html' => $html
+    //         ]);
+    //     }
+    
+    //     return response()->json(['error' => 'فشل رفع الملف!'], 400);
+    // }
 
 }

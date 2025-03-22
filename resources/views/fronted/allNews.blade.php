@@ -13,7 +13,9 @@
                 <h3>الأخبار الرئيسية</h3>
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item" aria-current="page">الرئيسية</li>
+                      <li class="breadcrumb-item" aria-current="page">
+                        <a class="link" href="{{ route('home') }}">الرئيسية</a>
+                      </li>
                       <li class="breadcrumb-item active">الأخبار الرئيسية</li>
                     </ol>
                 </nav>

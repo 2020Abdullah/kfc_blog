@@ -62,135 +62,144 @@
                 <h5 class="mb-0">شرائح السلايدر</h5>
                 <small>أضف شريحة</small>
             </div>
-            <div class="mt-2 mb-2">
-                @if($code === 'Hero1')
-                    <!-- نص فقط -->
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">العنوان</label>
-                        <input type="text" wire:model="title" class="form-control" placeholder="ادخل عنوان ...">
-                        @error('title') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الوصف</label>
-                        <textarea wire:model="description" class="form-control" rows="5" placeholder="ادخل وصف ..."></textarea>
-                        @error('description') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الرابط إن وجد (اختيارى)</label>
-                        <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
-                    </div>
+            <form wire:submit.prevent="addSlice" enctype="multipart/form-data">
+                <div class="mt-2 mb-2">
+                    @if($code === 'Hero1')
+                        <!-- نص فقط -->
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">العنوان</label>
+                            <input type="text" wire:model="title" class="form-control" placeholder="ادخل عنوان ...">
+                            @error('title') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الوصف</label>
+                            <textarea wire:model="description" class="form-control" rows="5" placeholder="ادخل وصف ..."></textarea>
+                            @error('description') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الرابط إن وجد (اختيارى)</label>
+                            <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
+                        </div>
 
-                @elseif($code === 'Hero2' || $code === 'Hero3')
-                    <!-- صورة فقط -->
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الصورة</label>
-                        <input type="file" wire:model="image" class="form-control">
-                        @error('image') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الرابط إن وجد (اختيارى)</label>
-                        <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
-                    </div>
-                @elseif($code === 'University')
-                    <!-- فيديو يوتيوب -->
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">رابط فيديو يوتيوب</label>
-                        <input type="url" wire:model="youtube_link" class="form-control" placeholder="https://www.youtube.com/watch?v=xxxx">
-                        @error('youtube_link') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الرابط إن وجد (اختيارى)</label>
-                        <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
-                    </div>
-                @else
-                    <!-- صورة + نص -->
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">العنوان</label>
-                        <input type="text" wire:model="title" class="form-control" placeholder="ادخل عنوان ...">
-                        @error('title') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الوصف</label>
-                        <textarea wire:model="description" class="form-control" rows="5" placeholder="ادخل وصف ..."></textarea>
-                        @error('description') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الصورة</label>
-                        <input type="file" wire:model="image" class="form-control">
-                        @error('image') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
-                    </div>
-                    <div class="mt-1 mb-1">
-                        <label class="form-label">الرابط إن وجد (اختيارى)</label>
-                        <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
-                    </div>
-                @endif
+                    @elseif($code === 'Hero2' || $code === 'Hero3')
+                        <!-- صورة فقط -->
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الصورة</label>
+                            <input type="file" wire:model="image" class="form-control">
+                            @error('image') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                            @if ($image)
+                                <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail mt-2" width="150">
+                            @endif
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الرابط إن وجد (اختيارى)</label>
+                            <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
+                        </div>
+                    @elseif($code === 'University')
+                        <!-- فيديو يوتيوب -->
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">رابط فيديو يوتيوب</label>
+                            <input type="url" wire:model="youtube_link" class="form-control" placeholder="https://www.youtube.com/watch?v=xxxx">
+                            @error('youtube_link') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الرابط إن وجد (اختيارى)</label>
+                            <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
+                        </div>
+                    @else
+                        <!-- صورة + نص -->
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">العنوان</label>
+                            <input type="text" wire:model="title" class="form-control" placeholder="ادخل عنوان ...">
+                            @error('title') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الوصف</label>
+                            <textarea wire:model="description" class="form-control" rows="5" placeholder="ادخل وصف ..."></textarea>
+                            @error('description') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الصورة</label>
+                            <input type="file" wire:model="image" class="form-control">
+                            @error('image') <div class="alert alert-danger mt-1"><div class="alert-body">{{ $message }}</div></div> @enderror
+                            @if ($image)
+                                <img src="{{ $image->temporaryUrl() }}" class="img-thumbnail mt-2" width="150">
+                            @endif
+                        </div>
+                        <div class="mt-1 mb-1">
+                            <label class="form-label">الرابط إن وجد (اختيارى)</label>
+                            <input type="text" wire:model="refLink" class="form-control" placeholder="ادخل الرابط الذى تريد المستخدم الذهاب إليه عند الضغط علي الشريحة ...">
+                        </div>
+                    @endif
 
-                <hr/>
-                <!-- slider preview table -->
-                @if($code == 'Hero1')
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>العنوان</th>
-                                <th>الوصف</th>
-                                <th>حذف</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($slices as $index => $slide)
+                    <hr/>
+                    <!-- slider preview table -->
+                    @if($code == 'Hero1')
+                        <table class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>{{ $slide['title'] ?? '-' }}</td>
-                                    <td>{{ $slide['description'] ?? '-' }}</td>
-                                    <td>
-                                        <button wire:click="removeSlice({{ $index }})" class="btn btn-icon btn-danger waves-effect waves-float waves-light">
-                                            <i class='fa fa-trash'></i>
-                                        </button>
-                                    </td>
+                                    <th>#</th>
+                                    <th>العنوان</th>
+                                    <th>الوصف</th>
+                                    <th>حذف</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>       
-                @else 
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>الصورة / الفيديو</th>
-                                <th>الموقع المشار إليه</th>
-                                <th>حذف</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($slices as $index => $slide)
+                            </thead>
+                            <tbody>
+                                @foreach($slices as $index => $slide)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>{{ $slide['title'] ?? '-' }}</td>
+                                        <td>{{ $slide['description'] ?? '-' }}</td>
+                                        <td>
+                                            <button wire:click="removeSlice({{ $index }})" class="btn btn-icon btn-danger waves-effect waves-float waves-light">
+                                                <i class='fa fa-trash'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>       
+                    @else 
+                        <div wire:loading wire:target="image" class="alert alert-info">
+                            جارٍ تحميل الصورة، يرجى الانتظار...
+                        </div>
+                        <table wire:on="refreshSlices" class="table table-bordered">
+                            <thead>
                                 <tr>
-                                    <td>{{ $index + 1 }}</td>
-                                    <td>
-                                        @if($code == 'University')
-                                            <iframe width="150" height="100" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($slide['youtube_link'], 'v=') }}" frameborder="0" allowfullscreen></iframe>
-                                        @else 
-                                            <img src="{{ asset($slide['image']) }}" alt="صورة" style="width: 100px; height: auto;">
-                                        @endif
-                                    </td>
-                                    <td>{{ $slide['refLink'] }}</td>
-                                    <td>
-                                        <button wire:click="removeSlice({{ $index }})" class="btn btn-icon btn-danger waves-effect waves-float waves-light">
-                                            <i class='fa fa-trash'></i>
-                                        </button>
-                                    </td>
+                                    <th>#</th>
+                                    <th>الصورة / الفيديو</th>
+                                    <th>الموقع المشار إليه</th>
+                                    <th>حذف</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                @endif
+                            </thead>
+                            <tbody>
+                                @foreach($slices as $index => $slide)
+                                    <tr>
+                                        <td>{{ $index + 1 }}</td>
+                                        <td>
+                                            @if($code == 'University')
+                                                <iframe width="150" height="100" src="https://www.youtube.com/embed/{{ \Illuminate\Support\Str::after($slide['youtube_link'], 'v=') }}" frameborder="0" allowfullscreen></iframe>
+                                            @else 
+                                                <img src="{{ asset($slide['image']) }}" alt="صورة" style="width: 100px; height: auto;">
+                                            @endif
+                                        </td>
+                                        <td>{{ $slide['refLink'] }}</td>
+                                        <td>
+                                            <button wire:click="removeSlice({{ $index }})" class="btn btn-icon btn-danger waves-effect waves-float waves-light">
+                                                <i class='fa fa-trash'></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
 
-                <button class="btn btn-success btn-next waves-effect waves-float waves-light" wire:click="addSlice">
-                    <span class="align-middle">أضف شريحة</span>
-                </button>
-            </div>
-
-
+                    <button wire:loading.attr="disabled" wire:target="slices"  wire:click="addSlice" class="btn btn-success btn-next waves-effect waves-float waves-light">
+                        <span class="align-middle">أضف شريحة</span>
+                    </button>
+                </div>
+            </form>
         </div>
 
         <div class="d-flex justify-content-between">
@@ -205,7 +214,7 @@
                 <button class="btn btn-primary btn-prev waves-effect waves-float waves-light" wire:click="PreviousStep" {{ $step == 1 ? 'disabled' : '' }}>
                     <span class="align-middle">السابق</span>
                 </button>
-                <button class="btn btn-primary btn-next waves-effect waves-float waves-light" wire:click="saveSlider">
+                <button class="btn btn-primary btn-next waves-effect waves-float waves-light  @if(count($slices) === 0) disabled @endif"  @if(count($slices) === 0) disabled @endif wire:loading.attr="disabled"  wire:target="saveSlider" wire:click="saveSlider">
                     <span class="align-middle">حفظ المعرض</span>
                 </button>
             @endif

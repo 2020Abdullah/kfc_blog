@@ -3,10 +3,28 @@
     <head>
         <meta charset="utf-8">
         <!-- meta code -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>@yield('page-title')</title>
-        @yield('meta-social')
+        <title>{{ config('app.name', 'Laravel') }}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('assets/logo.png') }}">
 
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="@yield('meta_description', 'نعمل علي تحقيق الأمن الغذائي للثروة الحيوانية من خلال توفير الأعلاف لمربي الماشية بأسعار تنافسية ‘ وكذلك تحقيق الرعاية البيطرية للثروة الحيوانية الخاصة بمربي الماشية من خلال العيادات والصيدليات البيطرية')">
+        <meta name="author" content="تعاونية الأصول">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="@yield('meta_title', 'تعاونية الأصول')">
+        <meta property="og:image" content="{{ asset('assets/logo.png') }}">
+        <meta property="og:url" content="{{ url()->current() }}">
+        <meta property="og:site_name" content="تعاونية الأصول">
+
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:title" content="@yield('meta_title', 'تعاونية الأصول')">
+        <meta name="description" content="@yield('meta_description', 'نعمل علي تحقيق الأمن الغذائي للثروة الحيوانية من خلال توفير الأعلاف لمربي الماشية بأسعار تنافسية ‘ وكذلك تحقيق الرعاية البيطرية للثروة الحيوانية الخاصة بمربي الماشية من خلال العيادات والصيدليات البيطرية')">
+        <meta property="og:image" content="{{ asset('assets/logo.png') }}">
+        
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +58,7 @@
 
         <!-- footer section -->
         <x-footer-section />
+        
         <!-- All scripts -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <!-- Owl Carousel -->

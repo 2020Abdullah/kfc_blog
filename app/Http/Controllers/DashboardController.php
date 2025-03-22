@@ -52,7 +52,7 @@ class DashboardController extends Controller
         }
 
         SiteInfo::updateOrCreate([
-            'user_id' => auth()->user()->id
+            'site_name' => $request->site_name,
         ], [
             'site_name' => $request->site_name,
             'site_logo' => $site_logo_path,

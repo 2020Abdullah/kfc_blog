@@ -2,6 +2,7 @@
 
 @section('css')
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css">
 @endsection
 
 @section('page-header')
@@ -91,6 +92,13 @@
                                     <input type="hidden" name="content" id="content">
                                     <input type="hidden" name="images" id="images">
                                 </div>
+
+                                <div class="mb-1">
+                                    <label class="form-label">رفع ملفات pdf</label>
+                                    <input type="file" name="files[]" class="form-control pdfFiles" accept="application/pdf" multiple>
+                                    <div id="pdf-dropzone" class="dropzone mt-2"></div>
+                                    <input type="hidden" name="uploaded_files" id="uploaded_files">
+                                </div>
         
                                 <button type="submit" class="btn btn-relief-primary">حفظ الصفحة</button>
                 
@@ -105,6 +113,7 @@
 
 @section('js')
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js"></script>
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -160,7 +169,7 @@
                     [{ header: [1, 2, false] }],
                     ["bold", "italic", "underline"],
                     [{ list: "ordered" }, { list: "bullet" }],
-                    ["image"], // زر رفع الصور
+                    ["image"],
                     [{ 'direction': 'rtl' }],
                     [{ align: '' }, { align: 'center' }, { align: 'right' }, { align: 'justify' }]
                 ],
@@ -208,7 +217,29 @@
             },
         },
     });
+// upload drop drag
 
+Dropzone.autoDiscover = false;
+
+var uploadedFiles = [];
+
+var dropzone = new Dropzone("#pdf-dropzone", {
+    url: "{{ route('page.upload') }}",
+    paramName: "file",
+    maxFiles: 100,
+    maxFilesize: 5, // الحجم الأقصى للملف بـ ميجابايت
+    acceptedFiles: "application/pdf",
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    success: function(file, response) {
+        uploadedFiles.push(response.file_name);
+        document.getElementById('uploaded_files').value = JSON.stringify(uploadedFiles);
+    },
+    error: function(file, response) {
+        console.error("Error uploading file:", response);
+    }
+});
 
 </script>
 @endsection
